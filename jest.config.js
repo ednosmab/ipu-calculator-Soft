@@ -1,6 +1,8 @@
 import { createDefaultEsmPreset } from "ts-jest"
 
-const presetConfig = createDefaultEsmPreset({})
+const presetConfig = createDefaultEsmPreset({
+    tsconfig: 'tsconfig.app.json',
+})
 
 export default{
     ...presetConfig,
