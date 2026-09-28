@@ -9,5 +9,9 @@ export function calculateCalibration(
         return {success: false, code: 'DIVISION_BY_ZERO'} 
     }
 
+    if(desiredWeight < 0 || machineSetting < 0 || extractedWeight < 0 ){
+        return {success: false, code: 'NEGATIVE_INPUT'}
+    }
+
     return {success: true, value: (desiredWeight * machineSetting) / extractedWeight} 
 }

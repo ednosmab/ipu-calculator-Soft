@@ -25,4 +25,28 @@ describe('IPU Calibration Engine', ()=>{
         }
         expect(result.code).toBe('DIVISION_BY_ZERO')
     })
+
+    test('must return NEGATIVE_INPUT when DesiredWeight is negative', ()=>{
+        const result = calculateCalibration(-1, machineSetting, extractedWeight)
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        expect(result.code).toBe('NEGATIVE_INPUT')
+    })
+
+    test('must return NEGATIVE_INPUT when MachineSetting is negative', ()=>{
+        const result = calculateCalibration(desiredWeight, -1, extractedWeight)
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        expect(result.code).toBe('NEGATIVE_INPUT')
+    })
+    
+    test('must return NEGATIVE_INPUT when ExtractedWeight is negative', ()=>{
+        const result = calculateCalibration(desiredWeight, machineSetting, -1)
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        expect(result.code).toBe('NEGATIVE_INPUT')
+    })
 })
