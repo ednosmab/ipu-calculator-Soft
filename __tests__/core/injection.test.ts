@@ -9,6 +9,9 @@ describe('IPU Injection Engine', ()=>{
 
         const result = calculateInjection(iso, poliol)
         
-        expect(result).toBeCloseTo(1.38)
+        expect(result.success).toBe(true)
+        if(result.success){
+            expect(result.value).toBeCloseTo(1.38)
+        }
     })
 })
