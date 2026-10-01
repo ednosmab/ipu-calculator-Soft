@@ -1,4 +1,4 @@
-import { calculateInjection } from '../../src/core/injection.js'
+import { inject } from '../../src/application/injection.usecase.js'
 
 describe('IPU Injection Engine', ()=>{
     const iso = 0.0662
@@ -6,7 +6,7 @@ describe('IPU Injection Engine', ()=>{
     const poliol = 0.127
     
     test('must calculate the amount of IPU based on the injection time', ()=>{
-        const result = calculateInjection(iso, poliol)
+        const result = inject(iso, poliol)
         
         if(!result.success){
             throw new Error ("Expected sucess")
@@ -15,7 +15,7 @@ describe('IPU Injection Engine', ()=>{
     })
 
     test('must return NEGATIVE_INPUT when Iso is negative', ()=>{
-        const result = calculateInjection(-1, poliol)
+        const result = inject(-1, poliol)
 
         if(result.success){
             throw new Error("Expected failure")
@@ -25,7 +25,7 @@ describe('IPU Injection Engine', ()=>{
     })
 
     test('must return NEGATIVE_INPUT when Poliol is negative', ()=>{
-        const result = calculateInjection(iso, -1)
+        const result = inject(iso, -1)
 
         if(result.success){
             throw new Error ("Expected Failure")
@@ -35,7 +35,7 @@ describe('IPU Injection Engine', ()=>{
     })
 
     test('must return ZERO_INPUT when both Iso and Poliol are zero', ()=>{
-        const result = calculateInjection(0, 0)
+        const result = inject(0, 0)
 
         if(result.success){
             throw new Error ("Expected failure")
@@ -45,7 +45,7 @@ describe('IPU Injection Engine', ()=>{
     })
 
     test('must return ZERO_INPUT when Iso is zero', ()=>{
-        const result = calculateInjection(0, poliol)
+        const result = inject(0, poliol)
 
         if(result.success){
             throw new Error ("Expected failure")
@@ -55,7 +55,7 @@ describe('IPU Injection Engine', ()=>{
     })
 
     test('must return ZERO_INPUT when Poliol is zero', ()=>{
-        const result = calculateInjection(iso, 0)
+        const result = inject(iso, 0)
 
         if(result.success){
             throw new Error ("Expected failure")
