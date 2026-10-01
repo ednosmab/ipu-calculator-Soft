@@ -2,6 +2,10 @@ import { CalcResult } from './types.js'
 import { calculateInjection } from '../core/injection.js'
 
 export function inject(iso: number, poliol: number): CalcResult{
+    if(!Number.isFinite(iso) || !Number.isFinite(poliol)){
+        return {success: false, code: 'INVALID_INPUT'}
+    }
+
     if(iso < 0 || poliol < 0){
         return {success: false, code: 'NEGATIVE_INPUT'}
     }

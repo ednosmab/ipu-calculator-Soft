@@ -68,4 +68,84 @@ describe('IPU Calibration Engine', ()=>{
         }
         expect(result.code).toBe('ZERO_INPUT')
     })
+
+    test('must return INVALID_INPUT when desired weight is NaN', ()=>{
+        const result = calibrate(NaN, machineSetting, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when machine setting is NaN', ()=>{
+        const result = calibrate(desiredWeight, NaN, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+    
+    test('must return INVALID_INPUT when extracted weight is NaN', ()=>{
+        const result = calibrate(desiredWeight, machineSetting, NaN)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when desired weight is Infinity', ()=>{
+        const result = calibrate(Infinity, machineSetting, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when machine setting is Infinity', ()=>{
+        const result = calibrate(desiredWeight, Infinity, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+    
+    test('must return INVALID_INPUT when extracted weight is Infinity', ()=>{
+        const result = calibrate(desiredWeight, machineSetting, Infinity)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when desired weight is NaN and extracted weight is zero', ()=>{
+        const result = calibrate(NaN, machineSetting, 0)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when desired weight is Infinity and extracted weight is zero', ()=>{
+        const result = calibrate(Infinity, machineSetting, 0)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
 })

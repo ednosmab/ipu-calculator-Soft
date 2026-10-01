@@ -63,4 +63,64 @@ describe('IPU Injection Engine', ()=>{
 
         expect(result.code).toBe('ZERO_INPUT')
     })
+
+    test('must return INVALID_INPUT when Poliol is NaN', ()=>{
+        const result = inject(iso, NaN)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when Iso is NaN', ()=>{
+        const result = inject(NaN, poliol)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when Poliol is Infinity', ()=>{
+        const result = inject(iso, Infinity)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when Iso is Infinity', ()=>{
+        const result = inject(Infinity, poliol)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when Iso is NaN and Iso is zero', ()=>{
+        const result = inject(NaN, 0)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when Iso is Infinity and Poliol is zero', ()=>{
+        const result = inject(Infinity, 0)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+        
+        expect(result.code).toBe('INVALID_INPUT')
+    })
 })

@@ -6,6 +6,10 @@ export function calibrate(
     machineSetting: number, 
     extractedWeight: number): CalcResult {
         
+    if(!Number.isFinite(desiredWeight) || !Number.isFinite(machineSetting) || !Number.isFinite(extractedWeight)){
+        return {success: false, code: 'INVALID_INPUT'}
+    }
+
     if(desiredWeight < 0 || machineSetting < 0 || extractedWeight < 0 ){
         return {success: false, code: 'NEGATIVE_INPUT'}
     }

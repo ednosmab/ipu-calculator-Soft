@@ -1,4 +1,4 @@
-export type ErrorCode = 'ZERO_INPUT' | 'NEGATIVE_INPUT'
+export type ErrorCode = 'ZERO_INPUT' | 'NEGATIVE_INPUT' | 'INVALID_INPUT'
 
 export type CalcResult = 
 {

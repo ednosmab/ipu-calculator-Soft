@@ -20,11 +20,12 @@ throwing, so callers must check `success` before using `value`.
 
 | Code            | Meaning                                             |
 |-----------------|-----------------------------------------------------|
+| `INVALID_INPUT` | A non-finite number was informed (NaN or Infinity)  |
 | `NEGATIVE_INPUT`| A negative value was informed (typing error)        |
 | `ZERO_INPUT`    | A required value is zero (missing technical sheet)  |
 
-Calibration validates inputs before the operation: negatives first,
-then zero extraction.
+Both engines validate inputs in order: non-finite check first
+(`INVALID_INPUT`), then negatives, then zero.
 
 ## Tech Stack
 
