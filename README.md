@@ -1,25 +1,39 @@
 # Calculadora IPU
 
-Polyurethane Injection (IPU) calculation engine with a web interface.
+Polyurethane Injection (IPU) calculation engines.
+Web interface: planned, not implemented yet.
 
 ## Calculation Engines
 
 ### 1. IPU Injection Engine
-Calculates the required injection index based on the combined mass
-of Isocyanate and Polyol.
+Calculates the injection value from the combined mass
+of Isocyanate and Polyol using the machine flow rate.
 
 ### 2. IPU Flow Calibration Engine
 Uses the Industrial Rule of Three to correct machine values
 based on actual extracted weight vs. desired weight.
 
+## Input Validation
+
+Both engines return a discriminated union (`CalcResult`) instead of
+throwing, so callers must check `success` before using `value`.
+
+| Code            | Meaning                                             |
+|-----------------|-----------------------------------------------------|
+| `NEGATIVE_INPUT`| A negative value was informed (typing error)        |
+| `ZERO_INPUT`    | A required value is zero (missing technical sheet)  |
+
+Calibration validates inputs before the operation: negatives first,
+then zero extraction.
+
 ## Tech Stack
 
-| Layer    | Technology |
-|----------|------------|
-| Logic    | TypeScript |
-| Interface| HTML / CSS |
-| Tests    | Jest       |
-| Quality  | ESLint     |
+| Layer    | Technology          |
+|----------|---------------------|
+| Logic    | TypeScript          |
+| Interface| HTML / CSS (planned)|
+| Tests    | Jest                |
+| Quality  | ESLint              |
 
 ## Prerequisites
 
@@ -34,14 +48,20 @@ based on actual extracted weight vs. desired weight.
 
 ## How to Run
 
-    npm start
+There is no application entry point yet (engines only). The available
+commands are test, typecheck, lint and build:
+
+    npm run verify
 
 ## Project Structure
 
     calc-IPU/
-    ├── src/                # Calculation engines
-    ├── __tests__/          # Tests
-    ├── tsconfig.json       # TypeScript config (build)
+    ├── src/
+    │   └── core/           # Calculation engines (calibration, injection, types)
+    ├── __tests__/
+    │   └── core/           # Engine tests
+    ├── tsconfig.json       # Solution-style config (references)
+    ├── tsconfig.app.json   # TypeScript config (build)
     ├── tsconfig.test.json  # TypeScript config (typecheck)
     ├── jest.config.js      # Jest config
     └── eslint.config.js    # ESLint config
@@ -50,7 +70,6 @@ based on actual extracted weight vs. desired weight.
 
 | Command             | Description                     |
 |---------------------|---------------------------------|
-| `npm start`         | Start the application           |
 | `npm test`          | Run tests                       |
 | `npm run typecheck` | Check types                     |
 | `npm run lint`      | Check code quality              |

@@ -34,13 +34,33 @@ describe('IPU Injection Engine', ()=>{
         expect(result.code).toBe('NEGATIVE_INPUT')
     })
 
-    test('must calculate zero when both Iso and Poliol are zero', ()=>{
+    test('must return ZERO_INPUT when both Iso and Poliol are zero', ()=>{
         const result = calculateInjection(0, 0)
 
-        if(!result.success){
-            throw new Error ("Expected success")
+        if(result.success){
+            throw new Error ("Expected failure")
         }
 
-        expect(result.value).toBeCloseTo(0)
+        expect(result.code).toBe('ZERO_INPUT')
+    })
+
+    test('must return ZERO_INPUT when Iso is zero', ()=>{
+        const result = calculateInjection(0, poliol)
+
+        if(result.success){
+            throw new Error ("Expected failure")
+        }
+
+        expect(result.code).toBe('ZERO_INPUT')
+    })
+
+    test('must return ZERO_INPUT when Poliol is zero', ()=>{
+        const result = calculateInjection(iso, 0)
+
+        if(result.success){
+            throw new Error ("Expected failure")
+        }
+
+        expect(result.code).toBe('ZERO_INPUT')
     })
 })
