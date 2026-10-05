@@ -1,7 +1,11 @@
 # Calculadora IPU
 
 Polyurethane Injection (IPU) calculation engines.
-Static web interface built with Vite (MPA). Forms are not wired yet.
+Static web interface built with Vite (MPA).
+
+> Status: the injection page renders its form dynamically
+> (fields + empty-field feedback). Result wiring and the
+> calibration form are still pending.
 
 ## Calculation Engines
 
@@ -26,6 +30,9 @@ throwing, so callers must check `success` before using `value`.
 
 Both engines validate inputs in order: non-finite check first
 (`INVALID_INPUT`), then negatives, then zero.
+
+Rule ownership: numeric rules live in `application/` (covered by
+Jest); string and empty-field feedback live in `src/ui/`.
 
 ## Tech Stack
 
@@ -58,29 +65,31 @@ Both engines validate inputs in order: non-finite check first
 ## Project Structure
 
     calc-IPU/
-    ├── index.html              # Main menu (Vite entry point)
-    ├── pages/                  # One screen per engine
+    ├── index.html                  # Main menu (Vite entry point)
+    ├── pages/                      # One screen per engine
     │   ├── injection-page.html
     │   └── calibration-page.html
-    ├── public/                 # Served at root (-> /css/...)
-    │   └── css/
-    │       ├── reset.css
-    │       └── style.css
+    ├── public/
+    │   └── assets/images/          # App icons (served at root)
     ├── src/
-    │   ├── core/               # Pure calculation engines
-    │   └── application/        # Use cases + CalcResult types
-    ├── __tests__/              # Mirrors src/
+    │   ├── core/                   # Pure calculation engines
+    │   ├── application/            # Use cases + CalcResult types
+    │   └── ui/
+    │       ├── components/         # number-field factory
+    │       ├── styles/             # reset.css + style.css
+    │       └── injection-page.ts   # Injection form glue
+    ├── __tests__/                  # Mirrors src/
     │   ├── core/
     │   └── application/
-    ├── vite.config.ts          # MPA: 3 entry points
-    ├── tsconfig.json           # Solution-style config (references)
-    ├── tsconfig.app.json       # TypeScript config (build)
-    ├── tsconfig.test.json      # TypeScript config (typecheck)
-    ├── jest.config.js          # Jest config
-    └── eslint.config.js        # ESLint config
+    ├── vite.config.ts              # MPA: 3 entry points
+    ├── tsconfig.json               # Solution-style config (references)
+    ├── tsconfig.app.json           # TypeScript config (build)
+    ├── tsconfig.test.json          # TypeScript config (typecheck)
+    ├── jest.config.js              # Jest config
+    └── eslint.config.js            # ESLint config
 
-> **Note:** Vite serves `public/` at the site root, so HTML references
-> `/css/style.css` (not `/public/css/style.css`).
+> **Note:** CSS lives under `src/ui/styles/` (not `public/`) so the
+> Vite dev server hot-reloads it on change.
 
 ## Scripts
 
