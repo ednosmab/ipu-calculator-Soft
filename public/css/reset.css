@@ -1,0 +1,46 @@
+/* 1. Define o tamanho de fonte base proporcional (62.5% = 10px para cálculos em rem) */
+:root {
+    font-size: 62.5%;
+}
+
+/* 2. Aplica o modelo de caixa intuitivo e zera margens/paddings de tudo */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0; /* Adicionado para garantir o zeramento total em todos os navegadores */
+}
+
+/* 3. Garante que a página ocupe a altura total e melhora a leitura */
+body {
+    min-height: 100vh;
+    line-height: 1.5; /* Espaçamento de linha mais acessível */
+    -webkit-font-smoothing: antialiased; /* Torna as fontes mais nítidas em telas Mac/iOS */
+    -moz-osx-font-smoothing: grayscale;  /* Torna as fontes mais nítidas em telas Firefox/Mac */
+}
+
+/* 4. Melhora o comportamento padrão de mídias (evita que estourem o layout) */
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 5. Faz elementos de formulário herdarem a fonte e tamanho do documento */
+input, button, textarea, select {
+    font: inherit;
+}
+
+/* 6. Evita que textos muito longos quebrem o layout para o lado */
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+/* 7. Remove marcadores de listas */
+ul, ol {
+    list-style: none;
+}
+
+a {
+    color: inherit;            /* Faz o link herdar a cor do texto do elemento pai */
+    text-decoration: none;     /* Remove o sublinhado padrão */
+    display: inline-block; 
+}

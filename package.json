@@ -2,13 +2,14 @@
   "name": "calc-ipu",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest",
     "lint": "eslint .",
-    "build": "tsc -b",
+    "build": "vite build",
     "typecheck": "tsc --noEmit -p tsconfig.test.json",
-    "verify": "npm test && npm run typecheck && npm run lint"
+    "verify": "npm test && npm run typecheck && npm run lint",
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "jest": "^30.5.2",
     "ts-jest": "^29.4.13",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.70.1"
+    "typescript-eslint": "^8.70.1",
+    "vite": "^8.3.2"
   }
 }

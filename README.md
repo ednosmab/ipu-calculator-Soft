@@ -1,7 +1,7 @@
 # Calculadora IPU
 
 Polyurethane Injection (IPU) calculation engines.
-Web interface: planned, not implemented yet.
+Static web interface built with Vite (MPA). Forms are not wired yet.
 
 ## Calculation Engines
 
@@ -29,12 +29,13 @@ Both engines validate inputs in order: non-finite check first
 
 ## Tech Stack
 
-| Layer    | Technology          |
-|----------|---------------------|
-| Logic    | TypeScript          |
-| Interface| HTML / CSS (planned)|
-| Tests    | Jest                |
-| Quality  | ESLint              |
+| Layer     | Technology    |
+|-----------|---------------|
+| Logic     | TypeScript    |
+| Interface | HTML / CSS    |
+| Dev/Build | Vite 8 (MPA)  |
+| Tests     | Jest          |
+| Quality   | ESLint        |
 
 ## Prerequisites
 
@@ -49,33 +50,49 @@ Both engines validate inputs in order: non-finite check first
 
 ## How to Run
 
-There is no application entry point yet (engines only). The available
-commands are test, typecheck, lint and build:
+    npm run dev       # dev server at http://localhost:5173
+    npm run verify    # test + typecheck + lint
 
-    npm run verify
+`npm run build` bundles to `dist/`; `npm run preview` serves the build.
 
 ## Project Structure
 
     calc-IPU/
+    ├── index.html              # Main menu (Vite entry point)
+    ├── pages/                  # One screen per engine
+    │   ├── injection-page.html
+    │   └── calibration-page.html
+    ├── public/                 # Served at root (-> /css/...)
+    │   └── css/
+    │       ├── reset.css
+    │       └── style.css
     ├── src/
-    │   └── core/           # Calculation engines (calibration, injection, types)
-    ├── __tests__/
-    │   └── core/           # Engine tests
-    ├── tsconfig.json       # Solution-style config (references)
-    ├── tsconfig.app.json   # TypeScript config (build)
-    ├── tsconfig.test.json  # TypeScript config (typecheck)
-    ├── jest.config.js      # Jest config
-    └── eslint.config.js    # ESLint config
+    │   ├── core/               # Pure calculation engines
+    │   └── application/        # Use cases + CalcResult types
+    ├── __tests__/              # Mirrors src/
+    │   ├── core/
+    │   └── application/
+    ├── vite.config.ts          # MPA: 3 entry points
+    ├── tsconfig.json           # Solution-style config (references)
+    ├── tsconfig.app.json       # TypeScript config (build)
+    ├── tsconfig.test.json      # TypeScript config (typecheck)
+    ├── jest.config.js          # Jest config
+    └── eslint.config.js        # ESLint config
+
+> **Note:** Vite serves `public/` at the site root, so HTML references
+> `/css/style.css` (not `/public/css/style.css`).
 
 ## Scripts
 
-| Command             | Description                     |
-|---------------------|---------------------------------|
-| `npm test`          | Run tests                       |
-| `npm run typecheck` | Check types                     |
-| `npm run lint`      | Check code quality              |
-| `npm run verify`    | Test + typecheck + lint         |
-| `npm run build`     | Compile to `dist/`              |
+| Command             | Description                |
+|---------------------|----------------------------|
+| `npm run dev`       | Dev server (port 5173)     |
+| `npm test`          | Run tests                  |
+| `npm run typecheck` | Check types                |
+| `npm run lint`      | Check code quality         |
+| `npm run verify`    | Test + typecheck + lint    |
+| `npm run build`     | Bundle to `dist/`          |
+| `npm run preview`   | Serve the production build |
 
 ## Intellectual Property
 

@@ -4,6 +4,6 @@
         "rootDir": ".",
         "types": ["jest", "node"]
     },
-    "include": ["src/**/*", "__tests__/**/*"],
+    "include": ["src/**/*", "__tests__/**/*", "vite.config.ts"],
     "exclude": ["node_modules", "dist"]
 }
