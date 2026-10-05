@@ -1,0 +1,17 @@
+@import "./reset.css";
+
+body {
+    background-color: #22242a;
+}
+
+a {
+    font-size: 2rem;
+}
+
+input[aria-invalid='true'] {
+    border: 2px solid #ff3b30;
+}
+
+.field-error {
+    color: #ff3b30;
+}
