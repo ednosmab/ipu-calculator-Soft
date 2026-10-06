@@ -8,7 +8,7 @@ describe('Field Validation', () =>{
         expect(validateField(' ', 'Poliol')).toBe('Informe um número para Poliol')
     })
 
-    test('must return message when input are spaces', () => {
+    test('must return message when input has spaces', () => {
         expect(validateField('  ', 'Isocianato')).toBe('Informe um número para Isocianato')
     })
 
@@ -20,7 +20,7 @@ describe('Field Validation', () =>{
         expect(validateField(' 7', '')).toBe('')
     })
     
-    test('must return message when input is space enter numbers', () => {
+    test('must return message when input has a space between numbers', () => {
         expect(validateField('1 2', 'Isocianato')).toBe('Valor inválido para Isocianato')
     })
     
