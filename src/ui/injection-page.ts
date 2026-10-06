@@ -1,3 +1,4 @@
+import { validateField } from "./validations/validate-field.js";
 import { createNumberField } from "./components/number-field.js";
 
 const form = document.querySelector<HTMLFormElement>('#injection-form')!
@@ -18,8 +19,9 @@ form.addEventListener('submit', (e) => {
     fields.forEach((field) => field.clearError())
 
     fields.forEach((field) => {
-        if(field.input.value.trim() === ''){
-            field.setError('Informe um valor')
+        const message  = validateField(field.input.value, field.labelText)
+        if(message){
+            field.setError(message)
         }
     })
 

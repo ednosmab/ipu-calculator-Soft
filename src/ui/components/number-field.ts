@@ -27,6 +27,6 @@ export function createNumberField(id: string, labelText: string) {
         input.removeAttribute('aria-invalid')
     }
 
-    return {wrapper, input, setError, clearError}
+    return {wrapper, input, labelText, setError, clearError}
 
 }

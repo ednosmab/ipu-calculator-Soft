@@ -3,9 +3,10 @@
 Polyurethane Injection (IPU) calculation engines.
 Static web interface built with Vite (MPA).
 
-> Status: the injection page renders its form dynamically
-> (fields + empty-field feedback). Result wiring and the
-> calibration form are still pending.
+> Status: the injection page renders its form dynamically and
+> validates every field with a labeled PT-BR message (empty,
+> invalid, negative, zero). Result wiring and the calibration
+> form are still pending.
 
 ## Calculation Engines
 
@@ -19,6 +20,10 @@ based on actual extracted weight vs. desired weight.
 
 ## Input Validation
 
+Validation happens at two boundaries.
+
+### Domain — `src/application/`
+
 Both engines return a discriminated union (`CalcResult`) instead of
 throwing, so callers must check `success` before using `value`.
 
@@ -31,8 +36,24 @@ throwing, so callers must check `success` before using `value`.
 Both engines validate inputs in order: non-finite check first
 (`INVALID_INPUT`), then negatives, then zero.
 
+### UI — `src/ui/validations/`
+
+`validateField(value, labelText)` checks the raw string before it
+reaches the domain and returns a PT-BR message (or `''` when valid):
+
+| Case       | Message                            |
+|------------|------------------------------------|
+| empty      | `Informe um número para <campo>`   |
+| not a number | `Valor inválido para <campo>`    |
+| negative   | `<campo> não pode ser negativo`    |
+| zero       | `<campo> não pode ser zero`        |
+
+Accepted input: comma or dot as decimal separator (`12,5` → 12.5)
+and border spaces (`' 7'`); internal spaces are rejected.
+
 Rule ownership: numeric rules live in `application/` (covered by
-Jest); string and empty-field feedback live in `src/ui/`.
+Jest); string parsing, messages and field labels live in
+`src/ui/validations/` (also covered by Jest).
 
 ## Tech Stack
 
@@ -77,10 +98,12 @@ Jest); string and empty-field feedback live in `src/ui/`.
     │   └── ui/
     │       ├── components/         # number-field factory
     │       ├── styles/             # reset.css + style.css
+    │       ├── validations/        # validate-field (string + labels)
     │       └── injection-page.ts   # Injection form glue
     ├── __tests__/                  # Mirrors src/
     │   ├── core/
-    │   └── application/
+    │   ├── application/
+    │   └── ui/
     ├── vite.config.ts              # MPA: 3 entry points
     ├── tsconfig.json               # Solution-style config (references)
     ├── tsconfig.app.json           # TypeScript config (build)
