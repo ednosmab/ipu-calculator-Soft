@@ -1,22 +1,17 @@
 import { CalcResult } from "./types.js"
 import { calculateCalibration } from "../core/calibration.js"
+import { validateInputs } from "./validate-inputs.js"
 
 export function calibrate(
     desiredWeight: number, 
     machineSetting: number, 
     extractedWeight: number): CalcResult {
-        
-    if(!Number.isFinite(desiredWeight) || !Number.isFinite(machineSetting) || !Number.isFinite(extractedWeight)){
-        return {success: false, code: 'INVALID_INPUT'}
-    }
 
-    if(desiredWeight < 0 || machineSetting < 0 || extractedWeight < 0 ){
-        return {success: false, code: 'NEGATIVE_INPUT'}
-    }
+    const error = validateInputs([desiredWeight, machineSetting, extractedWeight])
 
-    if(extractedWeight === 0){
-        return {success: false, code: 'ZERO_INPUT'} 
-    } 
+    if(error){
+        return {success: false, code: error}
+    }
 
     return {success: true, value: calculateCalibration(desiredWeight, machineSetting, extractedWeight)}
 }

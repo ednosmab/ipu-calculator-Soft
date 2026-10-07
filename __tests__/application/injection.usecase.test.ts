@@ -123,4 +123,24 @@ describe('IPU Injection Engine', ()=>{
         
         expect(result.code).toBe('INVALID_INPUT')
     })
+
+    test('must return INVALID_INPUT when Iso is zero and Poliol is NaN', ()=>{
+        const result = inject(0, NaN)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return NEGATIVE_INPUT when Iso is zero and Poliol is negative', ()=>{
+        const result = inject(0, -1)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('NEGATIVE_INPUT')
+    })
 })

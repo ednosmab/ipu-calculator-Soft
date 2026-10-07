@@ -1,17 +1,13 @@
 import { CalcResult } from './types.js'
 import { calculateInjection } from '../core/injection.js'
+import { validateInputs } from './validate-inputs.js'
 
 export function inject(iso: number, poliol: number): CalcResult{
-    if(!Number.isFinite(iso) || !Number.isFinite(poliol)){
-        return {success: false, code: 'INVALID_INPUT'}
+    const error = validateInputs([iso, poliol])
+
+    if(error){
+        return {success: false, code: error}
     }
 
-    if(iso < 0 || poliol < 0){
-        return {success: false, code: 'NEGATIVE_INPUT'}
-    }
-    
-    if(iso === 0 || poliol === 0) {
-        return {success: false, code: 'ZERO_INPUT'}
-    }
     return {success: true, value: calculateInjection(iso, poliol)}
 }

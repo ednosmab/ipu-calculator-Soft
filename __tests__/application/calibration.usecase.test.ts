@@ -148,4 +148,54 @@ describe('IPU Calibration Engine', ()=>{
 
         expect(result.code).toBe('INVALID_INPUT')
     })
+
+    test('must return ZERO_INPUT when desired weight is zero', ()=>{
+        const result = calibrate(0, machineSetting, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('ZERO_INPUT')
+    })
+
+    test('must return ZERO_INPUT when machine setting is zero', ()=>{
+        const result = calibrate(desiredWeight, 0, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('ZERO_INPUT')
+    })
+
+    test('must return INVALID_INPUT when desired weight is zero and extracted weight is NaN', ()=>{
+        const result = calibrate(0, machineSetting, NaN)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return INVALID_INPUT when machine setting is zero and extracted weight is Infinity', ()=>{
+        const result = calibrate(desiredWeight, 0, Infinity)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('INVALID_INPUT')
+    })
+
+    test('must return NEGATIVE_INPUT when desired weight is zero and machine setting is negative', ()=>{
+        const result = calibrate(0, -1, extractedWeight)
+
+        if(result.success){
+            throw new Error ('Expected failure')
+        }
+
+        expect(result.code).toBe('NEGATIVE_INPUT')
+    })
 })

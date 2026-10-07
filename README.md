@@ -7,6 +7,11 @@ Static web interface built with Vite (MPA).
 > validates every field with a labeled PT-BR message (empty,
 > invalid, negative, zero). Result wiring and the calibration
 > form are still pending.
+>
+> Open domain question: injection units are unconfirmed — the
+> flow rate (`FLOW_RATE = 0.140` in `src/core/injection.ts`) and
+> the meaning of the result (seconds vs grams) need technical
+> data from the machine before wiring results.
 
 ## Calculation Engines
 
@@ -31,10 +36,12 @@ throwing, so callers must check `success` before using `value`.
 |-----------------|-----------------------------------------------------|
 | `INVALID_INPUT` | A non-finite number was informed (NaN or Infinity)  |
 | `NEGATIVE_INPUT`| A negative value was informed (typing error)        |
-| `ZERO_INPUT`    | A required value is zero (missing technical sheet)  |
+| `ZERO_INPUT`    | A required calculation parameter is zero (missing technical sheet) |
 
 Both engines validate inputs in order: non-finite check first
-(`INVALID_INPUT`), then negatives, then zero.
+(`INVALID_INPUT`), then negatives, then zero. Validation is shared
+via `validateInputs` (`src/application/validate-inputs.ts`), called
+by both use cases — one place owns the three rules.
 
 ### UI — `src/ui/validations/`
 
@@ -94,7 +101,7 @@ Jest); string parsing, messages and field labels live in
     │   └── assets/images/          # App icons (served at root)
     ├── src/
     │   ├── core/                   # Pure calculation engines
-    │   ├── application/            # Use cases + CalcResult types
+    │   ├── application/            # Use cases + validate-inputs + CalcResult types
     │   └── ui/
     │       ├── components/         # number-field factory
     │       ├── styles/             # reset.css + style.css
